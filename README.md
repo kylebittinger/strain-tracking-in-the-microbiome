@@ -8,9 +8,18 @@ Prerequisite
 
 Introduce study
 
-1. Original idea
+1. Original idea: obesity and weight gain
 2. Meconium paper
 3. Other papers: antibiotics, C. difficile
+4. Introduce subjects 104 and 285
+
+Read-based approaches
+
+1. Introduce E. coli species-specific marker genes from StrainPhlAn
+2. Index E. coli genes with bwa-mem
+3. Align 1d samples to E. coli genes with bwa-mem
+4. Compare the set of . coli genes in each sample
+5. Investigate SNVs in E. coli gene alignments
 
 Assembly-based approaches
 
