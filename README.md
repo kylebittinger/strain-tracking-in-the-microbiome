@@ -37,7 +37,7 @@ Try looking up a marker in UniRef. Go to [uniprot.org](https://www.uniprot.org/)
 
 Try searching for the marker nucleotide sequence on [NCBI BLAST](https://blast.ncbi.nlm.nih.gov/).
 
-### Align reads to E. coli marker genes
+### Align reads to StrainPhlAn E. coli marker genes
 
 Index the E. coli marker genes for search.
 
@@ -48,16 +48,40 @@ bwa-mem2 index ecoli_db/ecoli_markers.fna
 Align 1d samples to E. coli genes with bwa-mem
 
 ```bash
-bwa-mem2 mem ecoli_db/ecoli_markers.fna igram_reads/s285.STL.V01.1.4d_1.fastq.gz > s285.STL.V01.1.4d_1_ecoli.sam
+bwa-mem2 mem e_coli_markers.fna igram1_reads/s104.STL.V01.1.4d_1.fastq.gz > s104.STL.V01.1.4d_1.sam
 ```
 
-4. Compare the set of E. coli genes in each sample
-5. Investigate SNVs in E. coli gene alignments. For a given gene, show edit distance (NM) and mismatched bases (MD).
+Inspect SAM file and look for matches. Explain fields for edit distance (NM) and mismatched bases (MD).
+
+Count reads aligning to each E. coli marker gene
+
+```bash
+cat s104.STL.V01.1.4d_1.sam | grep -v "^@" |cut -f 3 | grep -vF '*' | sort | uniq -c | sort -nr > s104.STL.V01.1.4d_1_ecoli_cts.txt
+```
+
+Compare the set of E. coli genes in each sample
+
+Investigate SNVs in E. coli gene alignments
 
 ## Assembly-based approaches to strain tracking
 
-1. Review E. coli genome. Genome size, GC content, number of genes.
+1. Review E. coli genome (e.g., [K12](https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_000005845.2/)). Genome size (~5 Mbases), GC content (~50%), number of genes (~5k).
 2. Tour of contigs and annotation files. Contig length (.fna), gene location on contigs (inference.tsv), gene annotations (.ffn).
-3. Taxonomic annotation of contigs (Kraken assignment file). Look at species from 1d and 1m samples.
-4. Use vsearch to align ORFs between samples.
-5. BONUS: Point out phage tail proteins
+3. Taxonomic annotation of contigs (Kraken assignment file). Look at contig assignments from 1d and 1m samples. Look at species-level summary.
+5. Use vsearch to align ORFs between samples.
+
+The E. coli strain is retained in infant s104.
+
+```bash
+vsearch --usearch_global igram1_assembly/s104.STL.V01.1.4d.ffn --db igram1_assembly/s104.STL.V02.1mo.ffn --blast6out vsearch_s104.V01_s104.V02_ffn.txt --id 0.8
+```
+
+Contrast with alignment to the 1d sample from infant s285.
+
+```bash
+vsearch --usearch_global igram1_assembly/s104.STL.V01.1.4d.ffn --db igram1_assembly/s285.STL.V01.1.4d.ffn --blast6out vsearch_s104.V01_s285.V01_ffn.txt --id 0.8
+```
+
+6. Use vsearch to align ORFs to Single Copy Core Genes (SCCGs).
+7. Use vsearch to align ORFs to StrainPhlAn marker genes.
+8. BONUS: Point out phage proteins
