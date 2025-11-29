@@ -48,7 +48,7 @@ bwa-mem2 index ecoli_db/ecoli_markers.fna
 Align 1d samples to E. coli genes with bwa-mem
 
 ```bash
-bwa-mem2 mem e_coli_markers.fna igram1_reads/s104.STL.V01.1.4d_1.fastq.gz > s104.STL.V01.1.4d_1.sam
+bwa-mem2 mem ecoli_db/ecoli_markers.fna igram1_reads/s104.STL.V01.1.4d_1.fastq.gz > s104.STL.V01.1.4d_1.sam
 ```
 
 Inspect SAM file and look for matches. Explain fields for edit distance (NM) and mismatched bases (MD).
@@ -56,12 +56,12 @@ Inspect SAM file and look for matches. Explain fields for edit distance (NM) and
 Count reads aligning to each E. coli marker gene
 
 ```bash
-cat s104.STL.V01.1.4d_1.sam | grep -v "^@" |cut -f 3 | grep -vF '*' | sort | uniq -c | sort -nr > s104.STL.V01.1.4d_1_ecoli_cts.txt
+cat s104.STL.V01.1.4d_1.sam | grep -v "^@" | cut -f 3 | grep -vF '*' | sort | uniq -c | sort -nr > s104.STL.V01.1.4d_1_ecoli_cts.txt
 ```
 
-Compare the set of E. coli genes in each sample
+Compare the set of E. coli genes in each sample. Have audience members paste gene list into spreadsheet and find overlap between samples.
 
-Investigate SNVs in E. coli gene alignments
+Investigate SNVs in E. coli gene alignments. Have audience members find a SNV in a gene with high coverage and verify that the SNP appears in multiple read alignments.
 
 ## Assembly-based approaches to strain tracking
 
@@ -83,5 +83,35 @@ vsearch --usearch_global igram1_assembly/s104.STL.V01.1.4d.ffn --db igram1_assem
 ```
 
 6. Use vsearch to align ORFs to Single Copy Core Genes (SCCGs).
+
+```bash
+vsearch --usearch_global igram1_assembly/s104.STL.V01.1.4d.ffn --db ecoli_db/ecoli_sccg.ffn --blast6out s104.STL.V01.1.4d_ecoli_sccg.txt --id 0.9
+```
+
+Count hits to SCCGs
+
+```bash
+cat s104.STL.V01.1.4d_ecoli_sccg.txt | cut -f 2 | sort | uniq -c
+```
+
+We notice that one gene, NP_417757.1, was hit twice. One of the hits does not cover the full gene, and corresponds to KELACCIFFN_254 Alpha operon ribosome binding site. We can see that th other hits cover the full length of the target genes.
+
 7. Use vsearch to align ORFs to StrainPhlAn marker genes.
+
+```bash
+vsearch --usearch_global igram1_assembly/s104.STL.V01.1.4d.ffn --db ecoli_db/ecoli_strainphlan.ffn --blast6out vsearch_s104.V01_ecoli_strainplhan.txt --id 0.8
+```
+
+```bash
+cat vsearch_s104.V01_ecoli_strainplhan.txt| cut -f 2 | sort
+```
+
+Compare to the marker genes found by alignment of reads.
+
 8. BONUS: Point out phage proteins
+
+```bash
+less -i igram1_assembly/s104.STL.V01.1.4d.ffn
+```
+
+End with infant virome paper.
