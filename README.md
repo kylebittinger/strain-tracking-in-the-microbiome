@@ -1,6 +1,7 @@
 # Strain Tracking in the Microbiome
 
 [Workshop slides](https://docs.google.com/presentation/d/1cl7J-YjPcem-VkbAChEYUusJHhUyyIUVhV91fQ0ArF4/edit?usp=sharing)
+
 [Google Cloud Instructions](https://docs.google.com/presentation/d/1qVzn-xnHzUcfUSqcxrDEyWHAzq5GcjFEH5H0r3qz4Aw/edit?usp=sharing)
 
 ## Set up Miniconda enviornment
