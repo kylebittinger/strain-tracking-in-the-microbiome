@@ -1,7 +1,7 @@
 # Strain Diversity, Pangenomes, and Graph-based Analysis with Panaroo
 ## PennCHOP Microbiome Symposium – Strain Tracking in the Microbiome
 ### Table of Contents
-
+<br/>
 1. Why Strain Diversity Matters
 
 2. MLST: The Classical View of Strain Diversity
@@ -18,6 +18,7 @@
 
 8. Summary
 
+<br/>
 
 1. **Why Strain Diversity Matters**
 
@@ -71,8 +72,11 @@ Example STs:
 * S. aureus ST8
 
 * P. multocida ST122
-**Even isolates belonging to the same ST may differ by significant accessory genes, plasmids, prophages, and islands.**
+**Even isolates belonging to the same ST may differ by significant accessory genes, plasmids, prophages, and islands.**<br/>
+
 ![PFGE](PFGE.png)
+<br/>
+
 ![phages](phages.png)
 
 3. **What Is a Pangenome?**
